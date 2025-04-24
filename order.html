@@ -1,0 +1,48 @@
+{% include 'head.html'%}
+<div class="row mt-2">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+        <br>
+        <div class="card p-4 mt-1">
+            <form action="Order1" method="post">
+                <input type="hidden" name="FoodOrder_id" value="{{FoodOrder_id}}">
+                <input type="hidden" name="totalPrice" value="{{totalPrice}}">
+                <input type="hidden" name="order_type" value="{{order_type}}">
+                <div class="row">
+                    <div class="col-md-1">
+                    </div>
+                    <div class="col-md-6">
+                        <div class="text-left">Total Price : ${{totalPrice}}</div>
+                        <div class="text-left h6"></div>
+                    </div>
+                    <div class="col-md-4">
+                    </div>
+                </div>
+                  <div class="form-group mt-1">
+                    <label for="room_details">Room Details</label>
+                    <input type="text" class="form-control p-3" id="room_details" placeholder="Enter Room Details" name="room_details" required>
+                </div>
+
+                <div class="form-group mt-1">
+                    <label for="cardNumber">Card Number</label>
+                    <input type="text" class="form-control p-3" id="cardNumber" placeholder="Enter CardNumber" name="cardNumber" required>
+                </div>
+                 <div class="form-group">
+                    <label for="nameonCard">Name On Card</label>
+                    <input type="text" class="form-control p-3" id="nameonCard" placeholder="NameOnCard" name="nameonCard" required>
+                </div>
+                <div class="form-group mt-2">
+                    <label for="cvv">CVV</label>
+                    <input type="number" class="form-control p-3" id="cvv" placeholder="Enter CVV" name="cvv" required>
+                </div>
+                 <div class="form-group mt-2">
+                    <label for="ExpDate">Exp Date</label>
+                    <input type="text" class="form-control p-3" id="ExpDate" placeholder="Expiry Date" name="ExpDate" required>
+                </div>
+                <div class="mt-2">
+                    <input type="submit" value="Order" class="btn btn-primary w-100">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

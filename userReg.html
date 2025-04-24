@@ -1,0 +1,40 @@
+{% include 'head.html'%}
+<style>
+body {
+ background-image: url("https://img.freepik.com/premium-vector/canteen-interior-scenes_1300-1189.jpg?w=2000");
+  background-repeat: no-repeat; /* Do not repeat the image */
+  background-size: cover;
+  max-height:100%;
+
+}
+
+</style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <div class="row mt-5">
+        <div class="col-md-4"></div>
+        <div class="col-md-4 " style="margin-top:-80px">
+            <form action="customerReg1" method="post" >
+                <div class="card p-3 mt-5">
+                    <div class="text-center h4">Customer Registration</div>
+                  <div class="mt-1">
+                        <label>Name</label>
+                        <input type="text" name="name" id="name" placeHolder="Enter Name" required class="form-control">
+                    </div>
+                      <div class="mt-1">
+                        <label>Email</label>
+                        <input type="email" name="email" id="email" placeHolder="Enter Email" required class="form-control">
+                    </div>
+                    <div class="mt-1">
+                        <label>Phone</label>
+                        <input type="tel" name="phone" id="phone" placeholder="Enter Phone" required class="form-control">
+                    </div>
+                      <div class="mt-1">
+                        <label>Password</label>
+                        <input type="password" name="password" id="password" placeholder="Enter Password" required class="form-control">
+                    </div>
+                    <input type="submit" value="Register" class="btn btn-primary btn-block mt-3">
+                </div>
+            </form>
+        </div>
+    </div>

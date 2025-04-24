@@ -1,0 +1,32 @@
+{% include 'head.html' %}
+<style>
+body {
+ background-image: url("https://i.pinimg.com/736x/8b/a2/3a/8ba23ae96c0a8c9d61310d027e332de5.jpg");
+  background-repeat: no-repeat; /* Do not repeat the image */
+  background-size: cover;
+  max-height:100%;
+
+}
+</style>
+<div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4 ms-2">
+        <div class="card p-4 mt-5">
+            <form action="mealPackageOrder1" method="post">
+                <input type="hidden" name="FoodOrder_id" value="{{FoodOrder_id}}">
+                <input type="hidden" name="totalPrice" value="{{totalPrice}}">
+                <input type="hidden" name="order_type" value="{{order_type}}">
+                <div class="h4 text-center"></div>
+                <div class="form-group">
+                    <label for="from_date">Choose FromDate</label>
+                    <input type="date" class="form-control mt-1" id="from_date" name="from_date" required>
+                </div>
+                 <div class="form-group">
+                    <label for="to_date">Choose To Date</label>
+                    <input type="date" class="form-control mt-1" id="to_date" name="to_date" required>
+                </div>
+                <input type="submit" value="Order" class="btn  w-100 mt-3" style="background-color:#5F9EA0">
+            </form>
+        </div>
+    </div>
+</div>

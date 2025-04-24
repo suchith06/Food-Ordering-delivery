@@ -1,0 +1,37 @@
+{% include 'head.html'%}
+<style>
+body {
+ background-image: url("https://i.pinimg.com/736x/8b/a2/3a/8ba23ae96c0a8c9d61310d027e332de5.jpg");
+  background-repeat: no-repeat; /* Do not repeat the image */
+  background-size: cover;
+  max-height:100%;
+
+}
+
+</style>
+<div class="container mt-3">
+    <div class="text-center h6">Food Rating's</div>
+        <div class="row">
+                <div class="col-md-12">
+                    <div class="card p-3 m-1">
+                        {% for review in reviewsList%}
+                        {% set user=getReviewBy(review['User_id'])%}
+                            <div class="text-muted mt-2" style="font-size:80%">Review By  {{user['name']}}  on {{review['date'].strftime("%c")}}</div>
+                            <div class="row">
+                                <div class="col-md-1">
+                                    <div class="text-muted mt-2" style="font-size:80%">Rating : </div>
+                                    <div class="h6">{{review['rating']}}</div>
+                                </div>
+                                <div class="col-md-11">
+                                    <div class="text-muted mt-2" style="font-size:80%">Review : </div>
+                                    <div class="h6">{{review['review']}}</div>
+                                </div>
+                            </div>
+
+                        <hr>
+                        {% endfor%}
+                    </div>
+                </div>
+        </div>
+    </div>
+</div>

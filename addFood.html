@@ -1,0 +1,47 @@
+{% include 'head.html'%}
+<div class="container mt-3">
+    <div class="card mt-5 p-5" style="">
+        <div class="text-center h6 ">Add Food</div>
+        <form action="addFood1" method="post" enctype="multipart/form-data">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="">
+                        <label for="food_item_name">Food Name</label>
+                        <input type="text" name="food_item_name" id="food_item_name" placeholder="Enter Food Name" required class="form-control">
+                    </div>
+                    <div class="mt-1">
+                    <label for="price">Food price</label>
+                        <input type="text" name="price" id="price" placeholder="Enter Price" required class="form-control">
+                    </div>
+                    <div class="mt-1">
+                        <label for="quantity">Quantity</label>
+                        <input type="text" name="quantity" id="quantity" placeholder="Enter Quantity" required class="form-control">
+                    </div>
+                    <div class="mt-1">
+                        <label for="units">Units</label>
+                        <input type="text" name="units" id="units" placeholder="Units" required class="form-control">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="">
+                        <label for="photo" >Upload FoodPicture</label>
+                        <input type="file" name="photo" id="photo" required class="form-control" >
+                    </div>
+                    <div class="mt-1">
+                        <label for="FoodCategory_id">Choose Food Type</label>
+                        <select name="FoodCategory_id" id="FoodCategory_id" required class="form-control">
+                            {% for category in categories: %}
+                            <option value="{{category['_id']}}">{{category['food_category_name']}}</option>
+                            {% endfor %}
+                        </select>
+                        <div class="mt-1">
+                            <label for="food_description">Description</label>
+                            <input type="text" name="food_description" id="food_description"  placeholder="About Food" required class="form-control">
+                        </div>
+                    </div>
+                     <input type="submit" value="Add Food" class="btn btn-success w-100 mt-4">
+                </div>
+            </div>
+            </form>
+        </div>
+</div>

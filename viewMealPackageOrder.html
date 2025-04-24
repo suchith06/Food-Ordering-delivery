@@ -1,0 +1,76 @@
+{% include 'head.html'%}
+<style>
+body {
+ background-image: url("https://i.pinimg.com/736x/8b/a2/3a/8ba23ae96c0a8c9d61310d027e332de5.jpg");
+  background-repeat: no-repeat; /* Do not repeat the image */
+  background-size: cover;
+  max-height:100%;
+
+}
+
+</style>
+<div class="clear:both"></div>
+<div class="container mt-5">
+    <div class="row">
+        {% for order in order_items :%}
+        {% set user = getUserByOrder(order['User_id'])%}
+        {% set totalPrice = namespace(value=0) %}
+        {% set food_order_items = getFoodOrderItemByOrder(order['_id'])%}
+        <div class="col-md-12">
+            <div class="card mt-2" style="background-color:#F5DEB3">
+                <div class="row">
+                    <div class="col-md-3 " style="font-size:12px;">Order By : {{user['name']}} (User)</div>
+                    <div class="col-md-3" style="font-size:12px;">Order Date : {{order['date'].strftime("%c")}}</div>
+                    <div class="col-md-3" style="font-size:12px;">Status: {{order['status']}}</div>
+                    <div class="col-md-3 " style="font-size:11px;">Room Details : {{order['room_details']}}</div>
+                    <div class="col-md-3 mt-1" style="font-size:12px;">Start Date: {{order['from_date']}}</div>
+                     <div class="col-md-3 mt-1" style="font-size:12px;">To Date: {{order['to_date']}}</div>
+                     <div class="col-md-3 mt-1" style="font-size:12px;">Number Of Days: {{order['numberOfDays']}}</div>
+                     <div class="col-md-3 mt-1" style="font-size:12px;">Total Price: ${{order['totalAmount']}}</div>
+
+                    <div class="card-body">
+                        <div  class="container-fluid">
+                            <table class="table table-bordered" style="background-color:#FF6347">
+                                <thead>
+                                <tr>
+                                    <th style="font-size:80%;">Food Name</th>
+                                    <th style="font-size:80%;">Ordered Count</th>
+                                    <th style="font-size:80%;">Price</th>
+                                    <th style="font-size:80%;">Total Price</th>
+                                    <th style="font-size:80%;">Food Type</th>
+                                    <th style="font-size:80%;">Units</th>
+
+                                </tr>
+                                </thead>
+                                    {% for item in food_order_items %}
+                                {% set food  = getFoodByOrderItem(item['Food_item_id'])%}
+                                {% set category = getFoodCategoryByOrderItem(food['FoodCategory_id'])%}
+
+                                <tbody>
+                                <tr>
+                                     <td><img src="/static/Picture/{{food['photo']}}" style="max-width:100%;height:40px;"><br>{{food['food_item_name']}}</td>
+                                    <td>{{item['order_count']}}</td>
+                                    <td>$ {{food['price']}}</td>
+                                    <td>$ {{float(food['price'])*float(item['order_count'])}}</td>
+                                      <td>{{category['food_category_name']}}</td>
+                                    <td>{{food['units']}}</td>
+
+                                     {% endfor%}
+                                </tr>
+                                <tr>
+                                    <td colspan="3"></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                              </div>
+
+                         </div>
+                <div class="">Order Type :{{order['order_type']}}</div>
+                </div>
+            </div>
+        </div>
+        {% endfor%}
+    </div>
+</div>

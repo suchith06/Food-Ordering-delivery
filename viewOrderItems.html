@@ -1,0 +1,131 @@
+{% include 'head.html'%}
+<style>
+body {
+ background-image: url("https://i.pinimg.com/736x/8b/a2/3a/8ba23ae96c0a8c9d61310d027e332de5.jpg");
+  background-repeat: no-repeat; /* Do not repeat the image */
+  background-size: cover;
+  max-height:100%;
+
+}
+
+</style>
+<div class="clear:both"></div>
+<div class="container mt-5">
+    <div class="row">
+        {% for order in order_items :%}
+        {% set deliverBoy =getDeliverBoy(order['_id'])%}
+        {% set user = getUserByOrder(order['User_id'])%}
+        {% set totalPrice = namespace(value=0) %}
+        {% set food_order_items = getFoodOrderItemByOrder(order['_id'])%}
+        <div class="col-md-12">
+            <div class="card mt-2" style="background-color:#F5DEB3">
+                <div class="row">
+                    <div class="col-md-4 " style="font-size:12px;">Order By : {{user['name']}} (User)</div>
+                    <div class="col-md-4" style="font-size:12px;">Order Date : {{order['date'].strftime("%c")}}</div>
+                    <div class="col-md-4" style="font-size:12px;">Status: {{order['status']}}</div>
+                    <div class="col-md-4 mt-1" style="font-size:12px;">Room Details : {{order['room_details']}}</div>
+
+                    {% if deliverBoy!=None :%}
+                    <div class="col-md-4 mt-1" style="font-size:12px;">DeliverBoy Name : {{deliverBoy['name']}}</div>
+                    <div class="col-md-4 mt-1" style="font-size:12px;">DeliverBoy Phone : {{deliverBoy['phone']}}</div>
+                    {% endif%}
+                    <div class="card-body">
+                        <div  class="container-fluid">
+                            <table class="table table-bordered" style="background-color:#FF6347">
+                                <thead>
+                                <tr>
+                                    <th style="font-size:80%;">Food Name</th>
+                                    <th style="font-size:80%;">Ordered Count</th>
+                                    <th style="font-size:80%;">Price</th>
+                                    <th style="font-size:80%;">Total Price</th>
+                                    <th style="font-size:80%;">Food Type</th>
+                                    <th style="font-size:80%;">Units</th>
+                                    {% if order['status'] =='Cart'%}
+                                    <th style="font-size:80%;">Action</th>
+                                    {% endif%}
+                                    {% if order['status'] =='Order Collected'%}
+                                    <th style="font-size:80%;">Action</th>
+                                    {% endif%}
+                                </tr>
+                                </thead>
+                                    {% for item in food_order_items %}
+                                {% set food  = getFoodByOrderItem(item['Food_item_id'])%}
+                                {% set category = getFoodCategoryByOrderItem(food['FoodCategory_id'])%}
+                                {% if session['role']=='User'%}
+                                {% set  isRated = isFoodRated(food['_id'])%}
+                                {% endif%}
+                                <tbody>
+                                <tr>
+                                     <td><img src="/static/Picture/{{food['photo']}}" style="max-width:100%;height:40px;"><br>{{food['food_item_name']}}</td>
+                                    <td>{{item['order_count']}}</td>
+                                    <td>$ {{food['price']}}</td>
+                                    <td>$ {{float(food['price'])*float(item['order_count'])}}</td>
+                                     {% set totalPrice.value = totalPrice.value +float(food['price'])*float(item['order_count']) %}
+                                      <td>{{category['food_category_name']}}</td>
+                                    <td>{{food['units']}}</td>
+                                        {% if order['status'] =='Cart'%}
+                                    <td><a href="removeCart?FoodOrderItem_id={{item['_id']}}" class="btn btn-danger w-100">Remove</a> </td>
+                                    {% endif%}
+                                    {% if session['role']=='User'%}
+                                        {% if order['status']=='Order Collected'%}
+                                  {% if isRated ==0%}
+                                    <td><a href="rating?Food_item_id={{food['_id']}}" class="btn btn-primary">Give Rating</a></td>
+                                        {% endif%}
+                                    {% endif%}
+                                {% endif%}
+                                     {% endfor%}
+                                </tr>
+                                <tr>
+                                    <td colspan="3"></td>
+                                    <td><b>$ {{totalPrice.value}} </b></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <div class="">{{order['order_type']}}</div>
+                        </div>
+                            {% if order['status']=='Cart'%}
+                          <div class="col-md-3">
+                              <form action="order" method="post">
+                                  <select name="order_type" class="form-control" required>
+                                      <option value="OneTimeOrder">OneTime Order</option>
+                                      <option value="MealPackage">MealPackage</option>
+                                  </select>
+                                  <input type="hidden" name="FoodOrder_id" value="{{order['_id']}}">
+                                  <input type="hidden" name="totalPrice" value="{{totalPrice.value}}">
+                                  <input type="submit" value="Order" class="btn btn-primary w-100 mt-3 ">
+                              </form>
+                            {% endif%}
+                              </div>
+                            {% if session['role']=='admin'%}
+                             {% if order['status']=='Ordered'%}
+                            <a href="accept?FoodOrder_id={{order['_id']}}" class="btn btn-success">Accept Order</a>
+                            <br >
+                            <a href="reject?FoodOrder_id={{order['_id']}}" class="btn btn-danger mt-1">Reject Order</a>
+                            {% endif%}
+                            {% if order['status']=='Order Accepted'%}
+                            <a href="preparing?FoodOrder_id={{order['_id']}}" class="btn btn-success">Make As Preparing</a>
+                            {% endif%}
+                            {% if order['status']=='Preparing'%}
+                            <a href="prepared?FoodOrder_id={{order['_id']}}" class="btn btn-success">Make As Prepared</a>
+                            {% endif%}
+                              {% if order['status']=='Prepared'%}
+                            <a href="assignToDeliverBoy?food_order_id={{order['_id']}}" class="btn btn-success">Assign To Delivery Boy</a>
+                            {% endif%}
+                            {% endif%}
+                            {% if session['role']=='User'%}
+                             {% if order['status']=='Delivered'%}
+                            <a href="collectOrder?FoodOrder_id={{order['_id']}}" class="btn btn-primary">Collect Order</a>
+                            {% endif%}
+                            {% endif%}
+                            {% if session['role']=='Deliver_boy'%}
+                             {% if order['status']=='Assign To DeliverBoy'%}
+                            <a href="delivered?FoodOrder_id={{order['_id']}}" class="btn btn-primary">Make As Delivered</a>
+                            {% endif%}
+                            {% endif%}
+                         </div>
+                </div>
+            </div>
+        </div>
+        {% endfor%}
+    </div>
+</div>

@@ -1,0 +1,22 @@
+{% include 'head.html'%}
+  <div class="row mt-5">
+        <div class="col-md-4"></div>
+        <div class="col-md-4 " style="margin-top:-80px">
+            <form action="assignDeliverBoy1" method="post">
+                <div class="card p-3 mt-5">
+                    <input type="hidden" name="food_order_id" value="{{food_order_id}}">
+                    <div class="text-center h4">DeliveryBoy Details</div>
+                    <div class="mt-1">
+                        <label>Delivered Room Details</label>
+                        <select  name="Deliver_boy_id" id="Deliver_boy_id" required class="form-control">
+                            {% for deliverboy in deliverboys%}
+                            <option value="{{deliverboy['_id']}}">{{deliverboy['name']}}</option>
+                            {% endfor%}
+                        </select>
+                    </div>
+
+                    <input type="submit" value="Assign" class="btn btn-primary btn-block mt-3">
+                </div>
+            </form>
+        </div>
+    </div>

@@ -1,0 +1,26 @@
+{% include 'head.html'%}
+<style>
+body {
+ background-image: url("https://img.freepik.com/premium-vector/canteen-interior-scenes_1300-1189.jpg?w=2000");
+  background-repeat: no-repeat; /* Do not repeat the image */
+  background-size: cover;
+  max-height:100%;
+
+}
+
+</style>
+<div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-4 ms-2">
+        <div class="card p-4 mt-5">
+            <form action="addCategory1" method="post">
+                <div class="h4 text-center">Add Food Category</div>
+                <div class="form-group">
+                    <label for="food_category_name"></label>
+                    <input type="text" class="form-control mt-1" id="food_category_name" placeholder="Enter Food Category Name" name="food_category_name" required>
+                </div>
+                <input type="submit" value="Add Category" class="btn  w-100 mt-3" style="background-color:#5F9EA0">
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,109 @@
+{% include 'head.html'%}
+<style>
+body {
+ background-image: url("https://i.pinimg.com/736x/8b/a2/3a/8ba23ae96c0a8c9d61310d027e332de5.jpg");
+  background-repeat: no-repeat; /* Do not repeat the image */
+  background-size: cover;
+  max-height:100%;
+
+}
+
+</style>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-9">
+            <div class="text-center h4">
+                Available Meal plans
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            {% if session['role']=='admin'%}
+            <div class="card p-4 ">
+                <form action="addMealPlan" method="get">
+                    <div class="text-center h4">Add Meal Plan</div>
+                    <div class="m-2">
+                        <label class="meal_plan_name">Meal Plan</label>
+                        <input type="text" name="meal_plan_name" id="meal_plan_name" placeholder="Enter Meal PlanName" class="form-control" required>
+                    </div>
+                     <div class="m-2">
+                        <label class="price">Price</label>
+                        <input type="text" name="price" id="price" placeholder="Enter Price" class="form-control" required>
+                    </div>
+                      <div class="m-2">
+                        <label class="validity">Validity In Days</label>
+                        <input type="text" name="validity" id="validity" placeholder="Enter Validity In Days"  class="form-control" required>
+                    </div>
+                    <div class="mt-3 ms-2 me-2">
+                        <input type="submit" value="Add MealPlan" class="btn btn-primary w-100">
+                    </div>
+                </form>
+            </div>
+              {% endif%}
+        </div>
+        {% for meal_plan in meal_plans%}
+            <div class="col-md-4 text-start">
+                <div class="card" style="background-color:#ccc">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card p-3 text-start">
+                        <div class="" style="font-size:70%">Meal Plan</div>
+                        <div class=""><b>{{meal_plan['meal_plan_name']}}</b></div>
+                        <div class="mt-2" style="font-size:70%">Price</div>
+                        <div class=""><b>$ {{meal_plan['price']}}</b></div>
+                        <div class="mt-2" style="font-size:70%">Validity</div>
+                        <div class=""><b>{{meal_plan['validity']}} Days</b></div>
+                        <hr>
+                        <div class="">
+                            <div class="" style="font-size:90%;">Breakfast</div>
+                            <div style="height:100px;overflow:auto">
+                                <ul>
+                                    {% for food in  meal_plan['Breakfast']: %}
+                                        <li>{{food}}</li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                            {% if session['role']=='admin'%}
+                        <div class="mt-3">
+                            <a href="addMealFood?Meal_plan_id={{meal_plan['_id']}}" class="btn btn-primary w-100">Add Food</a>
+                        </div>
+                        {% endif%}
+                        {% if session['role']=='User'%}
+                         <div class="mt-3">
+                            <a href="enrollMealFood?Meal_plan_id={{meal_plan['_id']}}&TotalPrice={{meal_plan['price']}}&validity={{meal_plan['validity']}}" class="btn btn-primary w-100">Enroll</a>
+                        </div>
+                        {% endif%}
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="mt-4 pt-2">
+                        <div class="" style="font-size:90%;">Lunch</div>
+                        <div class="" style="height:100px;overflow:auto">
+                           <ul>
+                                {% for food in  meal_plan['Lunch']: %}
+                                    <li>{{food}}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="">
+                        <div class="" style="font-size:90%;">Dinner</div>
+                        <div class="" style="height:100px;overflow:auto">
+                            <ul>
+                                {% for food in  meal_plan['Dinner']: %}
+                                    <li>{{food}}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+        {% endfor %}
+  </div>
+</div>

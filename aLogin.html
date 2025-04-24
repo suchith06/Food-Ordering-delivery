@@ -1,0 +1,34 @@
+{% include 'head.html'%}
+<style>
+body {
+ background-image: url("https://i.pinimg.com/736x/8b/a2/3a/8ba23ae96c0a8c9d61310d027e332de5.jpg");
+  background-repeat: no-repeat; /* Do not repeat the image */
+  background-size: cover;
+  max-height:100%;
+
+}
+
+</style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<div class="row mt-2">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+        <div class="card p-4 mt-5 ">
+            <form action="aLogin1" method="post">
+                <div class="h4 text-center">Admin Login</div>
+                <div class="form-group">
+                    <label for="Username">User Name</label>
+                    <input type="text" class="form-control mt-1  " id="Username" placeholder="Enter Username" name="Username" required>
+                </div>
+                <div class="form-group mt-1">
+                    <label for="Password" style="">Password</label>
+                    <input type="Password" class="form-control mt-1" id="Password" placeholder="Enter Password" name="Password" required>
+                </div>
+                <div class="mt-2">
+                    <input type="submit" value="Login" class="btn  p-2 w-50">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
